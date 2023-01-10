@@ -6,7 +6,7 @@ export const delay = async (ms: number) => new Promise((resolve) => setTimeout(r
 
 export const errorCatcher = (error: unknown) => {
 	if (axios.isAxiosError(error)) {
-		console.log('Error message: ', error.message)
+		console.log('Error message: ', error)
 		return error.message
 	} else {
 		console.log('Unexpected error: ', error)
