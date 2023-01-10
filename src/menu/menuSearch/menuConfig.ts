@@ -1,4 +1,4 @@
-import { MenuSectionConfig } from 'types/handler'
+import { MenuSectionConfig } from "types";
 
 export const menuSectionConfig: MenuSectionConfig[] = [
 	{
