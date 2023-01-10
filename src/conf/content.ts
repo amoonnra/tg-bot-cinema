@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '.env' })
+
 export default {
    stickersId: {
       greet: "CAACAgIAAxkBAAEF4A9jJ4vmtDYFt8oEvldEa4iuQ0fLeAACjRoAAjl3IEuGvGm9V0ZEaikE",
@@ -15,4 +18,5 @@ export default {
          loadMovieInfo: "🎞  Подождите секундочку, загружаем...",
       },
    },
+   moviesLimit: '50'
 }
