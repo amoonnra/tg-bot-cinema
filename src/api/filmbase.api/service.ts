@@ -19,10 +19,10 @@ export async function getMovieData(requestConfig: AxiosRequestConfig<any>) {
 				const movieData = transformMovieObj(await getMovieInfo(el.id))
 				const { imdbId } = movieData
 
-				if (imdbId) {
-					const poster = await getPosterByImdbId('tt' + imdbId)
-					if (poster) movieData.poster = poster
-				}
+				// if (imdbId) {
+				// 	const poster = await getPosterByImdbId('tt' + imdbId)
+				// 	if (poster) movieData.poster = poster
+				// }
 
 				return movieData
 			})
