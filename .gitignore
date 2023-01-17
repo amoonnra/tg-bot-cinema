@@ -5,16 +5,10 @@ node_modules
 dist
 
 db/content/*
-!db/content
-
 db/users/*
-!db/users
-
 db/searhHistory/*
-!db/searhHistory
 
 logs/*
-!logs
 
 **/conf/content.*
 
