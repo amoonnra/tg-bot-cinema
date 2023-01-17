@@ -1,14 +1,18 @@
 import { Menu, MenuRange } from '@grammyjs/menu'
-import { MyContext } from 'types'
-import { collectionList } from 'index'
+import { Collection, MyContext } from 'types'
 import { goToMovieSlider } from 'menu/utils'
 import { navToMenuSection } from 'menu/utils/navToMenuSection'
+import Config from 'conf'
+import fs from 'fs/promises'
 
 export const menuCollections = new Menu<MyContext>('collections-menu')
 
 menuCollections.dynamic(async (ctx) => {
 	const range = new MenuRange<MyContext>()
 
+	const collectionList: Collection[] = JSON.parse(
+		await fs.readFile(`db/content/collections/allCollections.json`, 'utf-8')
+	)
 	const pages = Math.ceil(collectionList.length / 10)
 	const currentPage = Math.ceil(ctx.session.listIndex / 10)
 
@@ -22,7 +26,7 @@ menuCollections.dynamic(async (ctx) => {
 		})
 
 	if (currentPage > 0) {
-		range.text('<', async (ctx) => {
+		range.text(Config.get('button.prevPage'), async (ctx) => {
 			ctx.session.listIndex -= 10
 			ctx.menu.update()
 		})
@@ -31,13 +35,18 @@ menuCollections.dynamic(async (ctx) => {
 	range.text(`${currentPage + 1}/${pages}`)
 
 	if (currentPage < pages - 1) {
-		range.text('>', async (ctx) => {
-			ctx.session.listIndex += 10
-			ctx.menu.update()
-		})
+		range
+			.text(Config.get('button.nextPage'), async (ctx) => {
+				ctx.session.listIndex += 10
+				ctx.menu.update()
+			})
+			.row()
 	}
 
-	range.row().back('Назад', async (ctx) => await navToMenuSection(ctx, 'home'))
+	range.text(
+		Config.get('button.goBack'),
+		async (ctx) => await navToMenuSection(ctx, 'home')
+	)
 
 	return range
 })

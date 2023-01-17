@@ -1,7 +1,9 @@
-import { Menu } from "@grammyjs/menu";
-import { MyContext } from "types";
-import { navToMenuSection } from "./utils";
+import { Menu } from '@grammyjs/menu'
+import Config from 'conf'
+import { MyContext } from 'types'
+import { navToMenuSection } from './utils'
 
-export const menuUnknownRequest = new Menu<MyContext>('unknownRequest').text('Главное меню', (ctx) =>
-	navToMenuSection(ctx, 'home')
+export const menuUnknownRequest = new Menu<MyContext>('unknownRequest-menu').text(
+	Config.get('button.goBackToMainMenu'),
+	(ctx) => navToMenuSection(ctx, 'home')
 )

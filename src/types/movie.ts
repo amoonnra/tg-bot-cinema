@@ -17,6 +17,26 @@ export const movieTypeNames: { [key in MovieType]: MovieTypeName } = {
 	show: 'ТВ-шоу',
 }
 
+export type MovieType = FilmsType | SeriesType
+
+export const pluralTypeName = new Proxy(movieTypeNames, {
+	get(target, prop: MovieType) {
+		const value = target[prop]
+
+		if (value === 'Анимэ' || value === 'ТВ-шоу') return value
+		return value + 'ы'
+	},
+})
+
+export const inclinedTypeName = new Proxy(movieTypeNames, {
+	get(target, prop: MovieType) {
+		const value = target[prop]
+
+		if (value === 'Анимэ' || value === 'ТВ-шоу') return value
+		return value + 'а'
+	},
+})
+
 export type MovieTypeName =
 	| 'Анимэ'
 	| 'Анимэ-сериал'
@@ -26,36 +46,8 @@ export type MovieTypeName =
 	| 'Сериал'
 	| 'ТВ-шоу'
 
-export const isInclinedTypeName = (name: MovieTypeName) => name !== 'Анимэ' && name !== 'ТВ-шоу'
-
 export function isSeriesType(type: string): type is SeriesType {
 	return seriesTypes.indexOf(type as SeriesType) != -1
-}
-
-export type MovieType = FilmsType | SeriesType
-
-export type FilmbaseResponse = {
-	total: number
-	results: { id: FilmId }[]
-}
-
-export interface MovieFromApi {
-	id: FilmId
-	type: string
-	name: string
-	name_eng: StrNull
-	age: StrNull
-	poster: StrNull
-	year: number
-	imdb_id: StrNull
-	kinopoisk_id: StrNull
-	imdb: StrNull
-	kinopoisk: StrNull
-	time: StrNull
-	quality: string
-	genre: { [key: number]: string }
-	country: { [key: number]: string }
-	seasons?: { episodes: any[] }[]
 }
 
 export interface Movie {

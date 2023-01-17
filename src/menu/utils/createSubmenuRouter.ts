@@ -1,6 +1,6 @@
 import { Menu } from '@grammyjs/menu'
-import { MyContext } from 'types'
-import { isInclinedTypeName, MenuSectionConfig, movieTypeNames } from 'types'
+import Config from 'conf'
+import { MenuSectionConfig, MyContext, pluralTypeName } from 'types'
 import { goToMovieSlider } from './goToMovieSlider'
 import { navToMenuSection } from './navToMenuSection'
 
@@ -11,10 +11,7 @@ export function createSubmenuRouter(
 	const menu = new Menu<MyContext>(menuSection + '-menu')
 
 	menuSectionConfig.forEach(({ type, isRow }) => {
-		const typeName = movieTypeNames[type]
-		const pluralTypeName = typeName + (isInclinedTypeName(typeName) ? 'ы' : '')
-
-		menu.text(pluralTypeName, async (ctx) => {
+		menu.text(pluralTypeName[type], async (ctx) => {
 			ctx.menu.nav('movieItem-menu')
 			await goToMovieSlider(ctx, menuSection, type)
 		})
@@ -22,7 +19,10 @@ export function createSubmenuRouter(
 		if (isRow) menu.row()
 	})
 
-	menu.back('Назад', async (ctx) => await navToMenuSection(ctx, 'home'))
+	menu.text(
+		Config.get('button.goBack'),
+		async (ctx) => await navToMenuSection(ctx, 'home')
+	)
 
 	return menu
 }

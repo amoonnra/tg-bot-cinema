@@ -13,7 +13,7 @@ export type MenuRoute =
 	| 'movieItem'
 	| 'searchError'
 	| 'unknownRequest'
-	| 'inSearch'
+	| 'searchEnter'
 
 export interface MenuPoster {
 	photo: InputFile | string

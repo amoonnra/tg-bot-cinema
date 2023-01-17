@@ -2,7 +2,7 @@ import { DotNestedKeys } from "utils"
 import configContent from "./content"
 
 type ConfigObj = {
-   [key: string]: string | ConfigObj
+   [key: string]: string | ConfigObj | undefined
 }
 
 type GetImpl = (
@@ -19,7 +19,7 @@ const getImpl: GetImpl = function (object, property) {
       return value
    }
 
-   return getImpl(value, elems.slice(1))
+   return getImpl(value!, elems.slice(1))
 }
 
 export default class Config {

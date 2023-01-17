@@ -1,3 +1,5 @@
 export * from './createSubmenuRouter'
 export * from './navToMenuSection'
 export * from './goToMovieSlider'
+export * from './menuCaptions'
+export * from './onMenuOutdated'

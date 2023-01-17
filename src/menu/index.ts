@@ -1,35 +1,33 @@
 import { Menu } from '@grammyjs/menu'
-import { MyContext } from 'types'
-import menuSearch from './menuSearch'
-import { navToMenuSection } from './utils'
-import { menuMovieItem } from './menuMovieItem'
-import { menuUnknownRequest } from './menuUnknownRequest'
-import { menuInSearch } from './menuInSearch'
-import menuPopular from './menuPopular'
-import menuPremiers from './menuPremiers'
-import { menuCollections } from './menuCollections'
+import { MenuRouteConfig, MyContext } from 'types'
 import { menuAbout } from './menuAbout'
+import { menuBookmarks } from './menuBookmarks'
+import { menuCollections } from './menuCollections'
 import { menuContacts } from './menuContacts'
-import { MenuRouteConfig } from 'types'
+import { menuMovieItem } from './menuMovieItem'
+import { menuPopular } from './menuPopular'
+import { menuPremiers } from './menuPremiers'
+import { menuSearchEnter, menuSearch, menuSearchResult } from './menuSearch'
+import { menuUnknownRequest } from './menuUnknownRequest'
+import { navToMenuSection } from './utils'
 
 const menuHome = new Menu<MyContext>('home-menu')
 
+// Routes config
 const menuRoutesConfig: MenuRouteConfig[] = [
-	{ name: 'Премьеры', sectionType: 'premiers' },
-	{ name: 'Популярное', sectionType: 'popular', isRow: true },
-	{ name: 'Подборки', sectionType: 'collections' },
-	{ name: 'Ваши закладки', sectionType: 'bookmarks', isRow: true },
-	{ name: 'Поиск', sectionType: 'search', isRow: true },
-	{ name: 'О боте', sectionType: 'about' },
-	{ name: 'Контакты', sectionType: 'contacts' },
+	{ name: '🆕 Новинки', sectionType: 'premiers' },
+	{ name: '🚀 Популярное', sectionType: 'popular', isRow: true },
+	{ name: '🎭 Подборки', sectionType: 'collections' },
+	{ name: '⭐ Мои закладки', sectionType: 'bookmarks', isRow: true },
+	{ name: '🔎 Поиск', sectionType: 'search', isRow: true },
+	{ name: '💡 О боте', sectionType: 'about' },
+	{ name: '✉️ Контакты', sectionType: 'contacts' },
 ]
 
+// Append submenus
 menuRoutesConfig.forEach(({ name, sectionType, isRow }) => {
-	menuHome.submenu(
-		name,
-		sectionType + '-menu',
-		async (ctx) => await navToMenuSection(ctx, sectionType)
-	)
+	menuHome.text(name, async (ctx) => await navToMenuSection(ctx, sectionType))
+
 	if (isRow) menuHome.row()
 })
 
@@ -41,10 +39,11 @@ menuHome.register([
 	menuAbout,
 	menuContacts,
 	menuSearch,
+	menuBookmarks,
 ])
 
 // Minor routs
-menuHome.register([menuMovieItem, menuInSearch, menuUnknownRequest])
+menuHome.register([menuMovieItem, menuSearchEnter, menuSearchResult, menuUnknownRequest])
 
 //
 export default menuHome

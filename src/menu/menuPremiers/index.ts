@@ -1,4 +1,4 @@
 import { createSubmenuRouter } from 'menu/utils/createSubmenuRouter'
 import { menuSectionConfig } from './menuConfig'
 
-export default createSubmenuRouter('premiers', menuSectionConfig)
+export const menuPremiers = createSubmenuRouter('premiers', menuSectionConfig)

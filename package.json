@@ -7,6 +7,7 @@
 		"build": "tsc -w",
 		"start": "cross-env NODE_PATH=./dist node ./dist/index.js",
 		"tes": "cross-env NODE_PATH=./dist node ./dist/test.js",
+		"cron": "cross-env NODE_PATH=./dist node ./dist/cron.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -19,7 +20,9 @@
 	},
 	"dependencies": {
 		"@grammyjs/menu": "^1.1.2",
+		"@types/cron": "^2.0.0",
 		"axios": "^1.2.1",
+		"cron": "^2.2.0",
 		"cross-env": "^7.0.3",
 		"dotenv": "^16.0.3",
 		"grammy": "^1.12.1",

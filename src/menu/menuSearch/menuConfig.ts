@@ -1,15 +1,11 @@
-import { MenuSectionConfig } from "types";
+import { MenuSectionConfig } from 'types'
 
 export const menuSectionConfig: MenuSectionConfig[] = [
 	{
 		type: 'films',
-		isRow: true,
 	},
 	{
 		type: 'serials',
-	},
-	{
-		type: 'show',
 		isRow: true,
 	},
 	{
@@ -25,5 +21,8 @@ export const menuSectionConfig: MenuSectionConfig[] = [
 	{
 		type: 'anime-serials',
 		isRow: true,
+	},
+	{
+		type: 'show',
 	},
 ]

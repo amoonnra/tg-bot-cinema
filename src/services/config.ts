@@ -14,12 +14,3 @@ export const movieBaseApi = axios.create({
 	},
 	headers: { 'Content-Type': 'application/json' },
 })
-
-export const tmdbApi = axios.create({
-	baseURL: 'https://api.themoviedb.org/3',
-	httpsAgent: new https.Agent({ keepAlive: true }),
-	params: {
-		api_key: '8ffe14737f3bb0bba65c781d6ac7fda6',
-	},
-	headers: { 'Content-Type': 'application/json' },
-})
