@@ -4,11 +4,11 @@ node_modules
 
 dist
 
-db/**/
+db/**/*
 
-logs/**/
+logs/**/*
 
-**/conf/
+**/conf/*
 
 images/*
 
