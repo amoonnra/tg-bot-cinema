@@ -21,7 +21,7 @@ export async function appendPopulars() {
 				params: {
 					type,
 					sort: '-views',
-					// year: '2022'
+					year: '2022',
 				},
 			})
 
