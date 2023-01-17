@@ -6,7 +6,7 @@ dist
 
 db/content/*
 db/users/*
-db/searhHistory/*
+db/searchHistory/*
 
 logs/*
 
