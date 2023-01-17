@@ -26,7 +26,6 @@ export const bookmarkAction = async (
 			text: Config.get(
 				action === 'add' ? 'message.bookmarkAdded' : 'message.bookmarkRemoved'
 			),
-			show_alert: true,
 		})
 	} catch (error) {
 		await logg(error)

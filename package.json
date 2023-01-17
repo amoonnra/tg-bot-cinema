@@ -5,8 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "tsc -w",
-		"start": "cross-env NODE_PATH=./dist node ./dist/index.js",
-		"tes": "cross-env NODE_PATH=./dist node ./dist/test.js",
+		"start": "tsc && cross-env NODE_PATH=./dist node ./dist/index.js",
 		"cron": "cross-env NODE_PATH=./dist node ./dist/cron.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

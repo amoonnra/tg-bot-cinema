@@ -16,14 +16,13 @@ export const navToMenuSection = async (
 	route: MenuRoute,
 	optional?: OptionalParams
 ) => {
-	if (route === 'bookmarks') {
-		if (!ctx.session.userBookmarks.length) {
-			ctx.session.userBookmarks = await getBookmarks(ctx)
-		}
-		if (ctx.session.userBookmarks.length) {
-			ctx.menu.nav('movieItem-menu')
-			await goToMovieSlider(ctx, route)
-		}
+	if (route === 'bookmarks' && !ctx.session.userBookmarks.length) {
+		ctx.session.userBookmarks = await getBookmarks(ctx)
+	}
+
+	if (route === 'bookmarks' && ctx.session.userBookmarks.length) {
+		ctx.menu.nav('movieItem-menu')
+		await goToMovieSlider(ctx, route)
 	} else {
 		ctx.menu.nav(route + '-menu')
 		await ctx.editMessageMedia({
