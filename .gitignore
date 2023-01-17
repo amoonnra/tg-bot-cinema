@@ -8,7 +8,7 @@ db/**/
 
 logs/**/
 
-**/conf/*
+**/conf/
 
 images/*
 
