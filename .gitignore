@@ -4,7 +4,9 @@ node_modules
 
 dist
 
-db/*
+db/content/*
+db/users/*
+db/searhHistory/*
 
 logs/*
 
