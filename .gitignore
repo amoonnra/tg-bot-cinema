@@ -4,9 +4,9 @@ node_modules
 
 dist
 
-db/**/*.json
+db/**/
 
-logs/**/*.json
+logs/**/
 
 **/conf/*
 
