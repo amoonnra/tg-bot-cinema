@@ -2,7 +2,7 @@ import { Menu, MenuRange } from '@grammyjs/menu'
 import Config from 'conf'
 import { handleNewMovie } from 'handlers'
 import { navToMenuSection } from 'menu/utils'
-import { MyContext } from 'types'
+import { movieTypeNamesInSearch, MyContext } from 'types'
 import { getMovieInfoById, transformMovieObj } from 'services/filmbase.service'
 import { addSearchedMovie } from 'services/db.service'
 
@@ -11,9 +11,12 @@ export const menuSearchResult = new Menu<MyContext>('searchResult-menu')
 menuSearchResult.dynamic(async (ctx) => {
 	const range = new MenuRange<MyContext>()
 
-	ctx.session.searchList.forEach(({ name, year, id }) => {
+	ctx.session.searchList.forEach(({ name, year, id, type }) => {
+		const searchItemTitle = `${
+			['film', 'cartoon', 'anime'].includes(type) ? '🍿' : '📺'
+		} ${name} (${year}, ${movieTypeNamesInSearch[type].toLowerCase()})`
 		range
-			.text({ text: `🍿 ${name} (${year})`, payload: String(id) }, async (ctx) => {
+			.text({ text: searchItemTitle, payload: String(id) }, async (ctx) => {
 				const movie = transformMovieObj(await getMovieInfoById(id))
 
 				ctx.session.searchedMovieData = movie

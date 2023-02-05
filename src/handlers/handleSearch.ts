@@ -7,14 +7,23 @@ import { findMovieByName } from 'services/filmbase.service'
 import { addHistoryNote } from 'services/db.service'
 
 export const handleSearch = async (ctx: MyContext) => {
-	const { text } = ctx.msg!
-	const { searchType } = ctx.session
+	let { text } = ctx.msg!
+	let { searchType } = ctx.session
 
-	if (!text || !searchType) return
+	if (!text) return
+
+	if (/(?:\s)(фильм|film|movie)/.test(text)) {
+		searchType = 'films'
+		text = text.replace(/(?:\s)фильм/, '')
+	}
+	if (/(?:\s)(сериал|series|serial)/.test(text)) {
+		searchType = 'serials'
+		text = text.replace(/(?:\s)сериал/, '')
+	}
 
 	const startTime = Date.now()
 	const searchList = await findMovieByName(text, searchType)
-	const searchText = new Searchtext(searchType, text)
+	const searchText = new Searchtext(text, searchType)
 	const searchQuery: SearchQuery = {
 		text,
 		type: searchType,
@@ -24,7 +33,7 @@ export const handleSearch = async (ctx: MyContext) => {
 	}
 
 	ctx.session.searchList = searchList
-	
+
 	if (searchList.length) {
 		ctx.replyWithPhoto(new InputFile('images/searchResult.png'), {
 			caption: searchText.getResultText(),
@@ -39,7 +48,7 @@ export const handleSearch = async (ctx: MyContext) => {
 			reply_markup: menuSearchEnter,
 			parse_mode: 'HTML',
 		})
-		
+
 		searchQuery.isSuccess = false
 	}
 

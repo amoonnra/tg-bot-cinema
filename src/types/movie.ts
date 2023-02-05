@@ -17,6 +17,16 @@ export const movieTypeNames: { [key in MovieType]: MovieTypeName } = {
 	show: 'ТВ-шоу',
 }
 
+export const movieTypeNamesInSearch: { [key in string]: MovieTypeName } = {
+	'anime-film': 'Анимэ',
+	'anime-series': 'Анимэ-сериал',
+	cartoon: 'Мультфильм',
+	'cartoon-series': 'Мультсериал',
+	film: 'Фильм',
+	series: 'Сериал',
+	'tv-show': 'ТВ-шоу',
+}
+
 export type MovieType = FilmsType | SeriesType
 
 export const pluralTypeName = new Proxy(movieTypeNames, {

@@ -1,7 +1,7 @@
 import { Movie, MovieType } from './movie'
 
 export interface SearchQuery {
-	type: MovieType
+	type: MovieType | null
 	text: string
 	isSuccess: boolean
 	runTime: number

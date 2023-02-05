@@ -15,7 +15,7 @@ export const initial = (): SessionData => ({
 	searchType: null,
 	searchList: [],
 	searchedMovieData: null,
-	userBookmarks: []
+	userBookmarks: [],
 })
 
 // Middlewares
@@ -26,9 +26,12 @@ bot.use(rootMenu)
 bot.command('start', handleStart)
 
 bot.on(':text', async (ctx) => {
-	if (ctx.session?.searchType) handleSearch(ctx)
-	else handleErrorRequest(ctx)
+	handleSearch(ctx)
 })
+// bot.on(':text', async (ctx) => {
+// 	if (ctx.session?.searchType) handleSearch(ctx)
+// 	else handleErrorRequest(ctx)
+// })
 
 //
 export default bot

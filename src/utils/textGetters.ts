@@ -1,14 +1,14 @@
 import { inclinedTypeName, MovieType, pluralTypeName } from 'types'
 
 export class Searchtext {
-	constructor(public searchType: MovieType, public text: string) {}
+	constructor(public text: string, public searchType: MovieType | null) {}
 	getResultText() {
-		return `🔍 Вот, какие <b>${pluralTypeName[
-			this.searchType
-		].toLowerCase()}</b> нам удалось найти по запросу — <u>${this.text}</u>:`
+		return `🔍 Вот, <b>${this.searchType ? 'какие ' + pluralTypeName[
+			this.searchType 
+		].toLowerCase() : 'что'}</b> нам удалось найти по запросу — <u>${this.text}</u>:`
 	}
 	getFailedText() {
-		return `😞 ${inclinedTypeName[this.searchType]} c названием — <u>${
+		return `😞 ${this.searchType ? inclinedTypeName[this.searchType] : 'Материалов'} c названием — <u>${
 			this.text
 		}</u> не удалось найти в нашей базе. Попробуйте указать более точное название.
 

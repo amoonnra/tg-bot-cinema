@@ -1,3 +1,5 @@
+import { MovieType } from "./movie"
+
 type StrNull = string | null
 type FilmId = number
 
@@ -10,6 +12,7 @@ export interface FilmbaseResponseItem {
 	name: string
 	origin_name: StrNull
 	year: number
+	type: MovieType
 }
 
 export interface MovieFromApi {
