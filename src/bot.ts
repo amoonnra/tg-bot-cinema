@@ -26,12 +26,9 @@ bot.use(rootMenu)
 bot.command('start', handleStart)
 
 bot.on(':text', async (ctx) => {
-	handleSearch(ctx)
+	if (ctx.msg.text.startsWith('/') && ctx.msg.text !== '/start') handleErrorRequest(ctx)
+	else handleSearch(ctx)
 })
-// bot.on(':text', async (ctx) => {
-// 	if (ctx.session?.searchType) handleSearch(ctx)
-// 	else handleErrorRequest(ctx)
-// })
 
 //
 export default bot

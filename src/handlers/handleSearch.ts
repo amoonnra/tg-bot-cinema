@@ -5,6 +5,7 @@ import { SearchQuery } from 'types/user'
 import { menuSearchEnter, menuSearchResult } from 'menu/menuSearch'
 import { findMovieByName } from 'services/filmbase.service'
 import { addHistoryNote } from 'services/db.service'
+import { handleErrorRequest } from './handleErrorRequest'
 
 export const handleSearch = async (ctx: MyContext) => {
 	let { text } = ctx.msg!
