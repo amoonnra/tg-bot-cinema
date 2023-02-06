@@ -1,3 +1,4 @@
+import { updateBookmarks } from 'services/db.service'
 import {
 	appendCollections,
 	appendPopulars,
@@ -16,6 +17,23 @@ const updatePremiersAndPopular = new CronJob(
 			await logg('Начали запланированное обновление новинок.')
 			await appendPremiers()
 			await logg('Все прошло хорошо!')
+		} catch (error) {
+			await logg(error)
+		}
+	},
+	null,
+	true
+)
+
+const updateBookmarksCron = new CronJob(
+	'0 2 11 * * *',
+	async function () {
+		try {
+			const start = Date.now()
+			await logg('Начали запланированное обновление закладок всех пользователей.')
+			await updateBookmarks()
+			await logg('Все прошло хорошо! ')
+			await logg('Операция заняла ' + ((Date.now() - start) / 60000).toFixed(2) + ' мин.')
 		} catch (error) {
 			await logg(error)
 		}

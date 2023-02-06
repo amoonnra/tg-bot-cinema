@@ -1,5 +1,6 @@
-import fs from 'fs/promises'
-import { LocalUser, MyContext } from 'types'
+import { User } from 'db/models/user'
+import { MyContext } from 'types'
+import { logg } from 'utils'
 
 export const getUserName = (ctx: MyContext) => {
 	const { last_name, first_name, username, id } = ctx.from!
@@ -13,10 +14,11 @@ export const getUserName = (ctx: MyContext) => {
 	}
 }
 
-export const getUserData = async (userName: string) => {
-	const userData: LocalUser = JSON.parse(
-		await fs.readFile(`db/users/${userName}.json`, 'utf8')
-	)
-
-	return userData
+export const getUserData = async (id: number) => {
+	try {
+		return await User.findOne({ id })
+	} catch (error) {
+		await logg('Getting User Data Error' + error)
+		return
+	}
 }

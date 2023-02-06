@@ -14,7 +14,7 @@ export async function findMovieByName(
 
 	try {
 		const response = await movieBaseApi<FilmbaseResponse>('/list', {
-			params: { name, type, year, limit: type ? 50 : 150, sort: '-views' },
+			params: { name, type, year, limit: type ? 50 : 100, sort: '-views' },
 		})
 
 		const result = response.data.results.map(({ id, name, origin_name, year, type }) => ({
@@ -34,7 +34,6 @@ export async function findMovieByName(
 			({ name, origin_name }) =>
 				name.toLowerCase().match(regex) || origin_name?.toLowerCase().match(regex)
 		)
-		console.log(relevant)
 		return relevant.slice(0, 8)
 	} catch (error) {
 		await logg(error)

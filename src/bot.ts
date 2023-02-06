@@ -5,6 +5,8 @@ import { MyContext, SessionData } from 'types'
 import { handleSearch } from 'handlers/handleSearch'
 import { handleStart } from 'handlers/handleStart'
 import { handleErrorRequest } from 'handlers/handleErrorRequest'
+import { handleUpdateBookmarks } from 'handlers'
+
 
 // Init bot
 const bot = new Bot<MyContext>(process.env.TG_TOKEN as string)
@@ -21,6 +23,8 @@ export const initial = (): SessionData => ({
 // Middlewares
 bot.use(session({ initial }))
 bot.use(rootMenu)
+
+bot.callbackQuery('updateBookmarks', handleUpdateBookmarks)
 
 // Handlers
 bot.command('start', handleStart)

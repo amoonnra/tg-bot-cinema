@@ -5,7 +5,6 @@ import { SearchQuery } from 'types/user'
 import { menuSearchEnter, menuSearchResult } from 'menu/menuSearch'
 import { findMovieByName } from 'services/filmbase.service'
 import { addHistoryNote } from 'services/db.service'
-import { handleErrorRequest } from './handleErrorRequest'
 
 export const handleSearch = async (ctx: MyContext) => {
 	let { text } = ctx.msg!
@@ -13,13 +12,13 @@ export const handleSearch = async (ctx: MyContext) => {
 
 	if (!text) return
 
-	if (/(?:\s)(фильм|film|movie)/.test(text)) {
+	if (/(?:\s|^)(фильм|film|movie)/.test(text)) {
 		searchType = 'films'
-		text = text.replace(/(?:\s)фильм/, '')
+		text = text.replace(/(?:\s|^)фильм/, '').trim()
 	}
-	if (/(?:\s)(сериал|series|serial)/.test(text)) {
+	if (/(?:\s|^)(сериал|series|serial)/.test(text)) {
 		searchType = 'serials'
-		text = text.replace(/(?:\s)сериал/, '')
+		text = text.replace(/(?:\s|^)сериал/, '').trim()
 	}
 
 	const startTime = Date.now()

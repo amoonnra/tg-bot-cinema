@@ -21,6 +21,7 @@ export const navToMenuSection = async (
 	}
 
 	if (route === 'bookmarks' && ctx.session.userBookmarks.length) {
+		ctx.session.userBookmarks = await getBookmarks(ctx)
 		ctx.menu.nav('movieItem-menu')
 		await goToMovieSlider(ctx, route)
 	} else {

@@ -43,7 +43,12 @@ menuHome.register([
 ])
 
 // Minor routs
-menuHome.register([menuMovieItem, menuSearchEnter, menuSearchResult, menuUnknownRequest])
+menuHome.register([
+	menuMovieItem,
+	menuSearchEnter,
+	menuSearchResult,
+	menuUnknownRequest,
+])
 
 //
 export default menuHome

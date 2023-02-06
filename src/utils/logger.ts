@@ -9,11 +9,8 @@ export const logg = async (message: Error | unknown) => {
 	const dirPath = `logs/${month < 10 ? '0' + month : month}_${year}`
 	const filePath = dirPath + `/${day < 10 ? '0' + day : day}.json`
 
-	if (message instanceof Error) {
-		console.log(message.name)
-	} else {
-		console.log(message)
-	}
+	if (message instanceof Error) message = message.name
+	console.log(message)
 
 	try {
 		if (!fs.existsSync(dirPath)) {

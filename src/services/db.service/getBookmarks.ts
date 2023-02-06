@@ -1,9 +1,9 @@
 import { MyContext } from 'types'
-import { getUserData, getUserName } from './getUserInfo'
+import { getUserData } from './getUserInfo'
 
 export const getBookmarks = async (ctx: MyContext) => {
-	const userName = getUserName(ctx)
-	const userData = await getUserData(userName)
+	const { id } = ctx.from!
+	const userData = await getUserData(id)
 
-	return userData.bookmarks
+	return userData?.bookmarks || []
 }

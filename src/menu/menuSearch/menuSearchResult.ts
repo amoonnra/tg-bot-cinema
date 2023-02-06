@@ -18,7 +18,7 @@ menuSearchResult.dynamic(async (ctx) => {
 		range
 			.text({ text: searchItemTitle, payload: String(id) }, async (ctx) => {
 				const movie = transformMovieObj(await getMovieInfoById(id))
-
+				ctx.session.moviesList = []
 				ctx.session.searchedMovieData = movie
 				ctx.menu.nav('movieItem-menu')
 				handleNewMovie(ctx)

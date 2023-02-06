@@ -1,13 +1,13 @@
 import { Movie, MovieType } from './movie'
 
 export interface SearchQuery {
+	date: Date
 	type: MovieType | null
 	text: string
 	isSuccess: boolean
 	runTime: number
-	date: Date
 	userID?: number
-	userName?: string 
+	userName?: string
 }
 
 export interface LocalUser {
@@ -16,9 +16,8 @@ export interface LocalUser {
 	registerDate: Date
 	lastDate: Date
 	searhed: Pick<Movie, 'name' | 'nameEng' | 'year' | 'id' | 'imdbId' | 'kpId'>[]
-	searchHistory: SearchQuery[]
 	bookmarks: Movie[]
 	language?: string
 	lastName?: string
-	username?: string
+	userName?: string
 }

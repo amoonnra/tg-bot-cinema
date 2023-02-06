@@ -1,26 +1,33 @@
 import Config from 'conf'
-import fs from 'fs/promises'
 import { Movie, MyContext } from 'types'
 import { logg } from 'utils'
-import { getUserData, getUserName } from './getUserInfo'
+import { getUserData } from './getUserInfo'
 
 export const bookmarkAction = async (
 	action: 'add' | 'remove',
 	ctx: MyContext,
 	movie: Movie
 ) => {
-	const userName = getUserName(ctx)
-	const userData = await getUserData(userName)
+	const { id } = ctx.from!
+	const userData = await getUserData(id)
+	if (!userData) return
+	let bookmarks = userData.bookmarks || []
 
 	try {
 		if (action === 'add') {
-			userData.bookmarks.unshift(movie)
+			bookmarks.unshift(movie)
 		} else {
-			userData.bookmarks = userData.bookmarks.filter(({ id }) => movie.id !== id)
+			bookmarks = bookmarks.filter(({ id }) => movie.id !== id)
 		}
 
-		await fs.writeFile(`db/users/${userName}.json`, JSON.stringify(userData, null, 2))
-		ctx.session.userBookmarks = userData.bookmarks
+		userData.bookmarks = bookmarks
+		userData.lastDate = new Date()
+
+		userData.save(function (err) {
+			if (err) logg('Bookmark action Error')
+		})
+
+		ctx.session.userBookmarks = bookmarks
 
 		await ctx.answerCallbackQuery({
 			text: Config.get(
