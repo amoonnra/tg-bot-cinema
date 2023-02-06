@@ -14,7 +14,7 @@ export async function handleNewMovie(ctx: MyContext) {
 		await ctx.editMessageMedia({
 			type: 'photo',
 			media:
-				(data.kpRating !== '—'
+				(data.kpRating !== '—' && data.kpRating !== 'null'
 					? `https://st.kp.yandex.net/images/film_iphone/iphone360_${data.kpId}.jpg`
 					: data.poster) || new InputFile('images/noPoster.png'),
 			caption: caption,
