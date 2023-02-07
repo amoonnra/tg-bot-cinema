@@ -1,10 +1,17 @@
 import { InputFile } from 'grammy'
 import { MyContext } from 'types'
-import { Searchtext } from 'utils'
+import { Searchtext, transformMovieCaption } from 'utils'
 import { SearchQuery } from 'types/user'
 import { menuSearchEnter, menuSearchResult } from 'menu/menuSearch'
-import { findMovieByName } from 'services/filmbase.service'
+import {
+	findMovieByKp,
+	findMovieByName,
+	getMovieInfoById,
+	transformMovieObj,
+} from 'services/filmbase.service'
 import { addHistoryNote } from 'services/db.service'
+import { handleNewMovie } from './handleNewMovie'
+import { menuMovieItem } from 'menu/menuMovieItem'
 
 export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 	let { text } = ctx.msg!
@@ -48,8 +55,6 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 			.replace(' девять', ' 9')
 
 	const startTime = Date.now()
-	const searchList = await findMovieByName(text, searchType)
-	const searchText = new Searchtext(text, searchType)
 	const searchQuery: SearchQuery = {
 		text,
 		type: searchType,
@@ -58,24 +63,65 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 		isSuccess: true,
 	}
 
-	ctx.session.searchList = searchList
+	const isKpQuery = text.includes('kinopoisk') && text.match(/(?!\/)(?<=\/)\d+/)?.[0]
+	let searchText = new Searchtext(text, searchType)
 
-	if (searchList.length) {
-		ctx.replyWithPhoto(new InputFile('images/searchResult.png'), {
-			caption: searchText.getResultText(),
-			reply_markup: menuSearchResult,
-			parse_mode: 'HTML',
-		})
+	// Если пользователь ввел ссылку на кинопоиск
 
-		ctx.session.searchType = null
+	if (isKpQuery) {
+		const kpId = text.match(/(?!\/)\d+/)?.[0]
+		searchText = new Searchtext(kpId!, searchType)
+
+		const data = await findMovieByKp(Number(kpId))
+
+		if (data) {
+			// Удача
+
+			const movie = transformMovieObj(data)
+			ctx.session.moviesList = []
+			ctx.session.searchedMovieData = movie
+
+			await handleNewMovie(ctx, true)
+		} else {
+			// Неудача
+
+			ctx.replyWithPhoto(new InputFile('images/searchError.png'), {
+				caption: searchText.getFailedKpText(),
+				reply_markup: menuSearchEnter,
+				parse_mode: 'HTML',
+			})
+
+			searchQuery.isSuccess = false
+		}
+
+		////////////////////////////////////////////
 	} else {
-		ctx.replyWithPhoto(new InputFile('images/searchError.png'), {
-			caption: searchText.getFailedText(),
-			reply_markup: menuSearchEnter,
-			parse_mode: 'HTML',
-		})
+		//Если пользователь ввел название текстом
 
-		searchQuery.isSuccess = false
+		const searchList = await findMovieByName(text, searchType)
+		ctx.session.searchList = searchList
+
+		if (searchList.length) {
+			// Удача
+
+			ctx.replyWithPhoto(new InputFile('images/searchResult.png'), {
+				caption: searchText.getResultText(),
+				reply_markup: menuSearchResult,
+				parse_mode: 'HTML',
+			})
+
+			ctx.session.searchType = null
+		} else {
+			// Неудача
+
+			ctx.replyWithPhoto(new InputFile('images/searchError.png'), {
+				caption: searchText.getFailedText(),
+				reply_markup: menuSearchEnter,
+				parse_mode: 'HTML',
+			})
+
+			searchQuery.isSuccess = false
+		}
 	}
 
 	await addHistoryNote(ctx, searchQuery)

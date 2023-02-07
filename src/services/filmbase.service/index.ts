@@ -1,4 +1,5 @@
 export * from './dataTransformers'
 export * from './findMovieByName'
+export * from './findMovieByKp'
 export * from './getMovieInfoById'
 export * from './getMoviesData'

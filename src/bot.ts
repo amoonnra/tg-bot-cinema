@@ -33,8 +33,9 @@ bot.callbackQuery('updateBookmarks', handleUpdateBookmarks)
 // Handlers
 bot.command('start', handleStart)
 
-bot.on(':text', async (ctx) => {
-	if (ctx.msg.text.startsWith('/') && ctx.msg.text !== '/start') handleErrorRequest(ctx)
+bot.on(':text', async (ctx: MyContext) => {
+	const {text} = ctx.msg!
+	if (text!.startsWith('/') && text !== '/start') handleErrorRequest(ctx)
 	else handleSearch(ctx)
 })
 

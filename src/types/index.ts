@@ -1,4 +1,5 @@
 import { FileFlavor } from '@grammyjs/files'
+import { MenuFlavor } from '@grammyjs/menu'
 import { Context, SessionFlavor } from 'grammy'
 import { FilmbaseResponseItem } from './fromApi'
 import { Movie, MovieType } from './movie'

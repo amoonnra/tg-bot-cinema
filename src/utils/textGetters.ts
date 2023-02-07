@@ -20,4 +20,9 @@ ${
 		: ''
 }`
 	}
+	getFailedKpText() {
+		return `😞 ${
+			this.searchType ? inclinedTypeName[this.searchType] : 'Материалов'
+		} c id кинопоиска — <u>${this.text}</u> не удалось найти в нашей базе. `
+	}
 }

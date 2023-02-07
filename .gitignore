@@ -13,5 +13,6 @@ logs/*
 **/conf/content.*
 
 images/*
+voices/*
 
 **/**/menuCaptions.*

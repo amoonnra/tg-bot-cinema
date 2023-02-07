@@ -1,3 +1,4 @@
+import { MenuFlavor } from '@grammyjs/menu'
 import { MyContext } from 'types'
 import { getTextFromVoice } from 'utils/getTextFromVoice'
 import { handleSearch } from './handleSearch'

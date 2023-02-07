@@ -6,15 +6,11 @@ ffmpeg.setFfmpegPath(ffmpegPath)
 
 export const getTextFromVoice = async (url: string) => {
 	try {
-		const start = Date.now()
 		const fileName = await convertWavToMp3(url)
 		const res = await wit.speech('audio/ogg', await fs.readFile(fileName))
 
 		await fs.unlink(url)
 		await fs.unlink(fileName)
-
-		console.log(res)
-		console.log(Date.now() - start)
 
 		return res.text
 	} catch (error) {
