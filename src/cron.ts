@@ -26,14 +26,16 @@ const updatePremiersAndPopular = new CronJob(
 )
 
 const updateBookmarksCron = new CronJob(
-	'0 2 11 * * *',
+	'0 11 11 * * *',
 	async function () {
 		try {
 			const start = Date.now()
 			await logg('Начали запланированное обновление закладок всех пользователей.')
 			await updateBookmarks()
+			console.log('end')
 			await logg('Все прошло хорошо! ')
 			await logg('Операция заняла ' + ((Date.now() - start) / 60000).toFixed(2) + ' мин.')
+			return
 		} catch (error) {
 			await logg(error)
 		}

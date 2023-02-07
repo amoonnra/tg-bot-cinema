@@ -15,14 +15,14 @@ export const updateBookmarks = async () => {
 	} catch (error) {
 		console.log('DB connection error' + error)
 	}
-	User.find({}, null, async (err, users) => {
-		if (err) return console.log(err.message)
+	try {
+		const users = await User.find({}, null)
 
 		for (let user of users) {
 			const time = Math.round(
 				(Date.now() - user.lastDate.getTime()) / (1000 * 60 * 60 * 24)
 			)
-			if (time > 10) return
+			if (time > 21) continue
 
 			const updates: string[] = []
 
@@ -31,8 +31,8 @@ export const updateBookmarks = async () => {
 
 				if (bookmark.quality !== newBookmark.quality) {
 					updates.push(
-						`– <b>${bookmark.name}</b>. 
-  Качество видео обновилось: ${bookmark.quality} 🠒 ${newBookmark.quality} / <a href="${
+						`– <b>${bookmark.name}</b>.
+		  Качество видео обновилось: ${bookmark.quality} → ${newBookmark.quality} / <a href="${
 							Config.get('url.site') + String(newBookmark.id)
 						}"><u>Смотреть</u></a>`
 					)
@@ -45,8 +45,8 @@ export const updateBookmarks = async () => {
 						bookmark.lastSeason !== newBookmark.lastSeason)
 				) {
 					updates.push(
-						`– <b>${bookmark.name}</b>. 
-  Вышла ${newBookmark.lastEpisode} серия ${newBookmark.lastSeason} сезона / <a href="${
+						`– <b>${bookmark.name}</b>.
+		  Вышла ${newBookmark.lastEpisode} серия ${newBookmark.lastSeason} сезона / <a href="${
 							Config.get('url.site') + String(newBookmark.id)
 						}"><u>Смотреть</u></a>`
 					)
@@ -56,13 +56,12 @@ export const updateBookmarks = async () => {
 			}
 
 			await user.save()
-
 			if (updates.length) {
 				const text = `❤️‍🔥 Фильмы / сериалы в ваших закладках обновились:
 
-${updates.join('\n\n')}
+		${updates.join('\n\n')}
 
-Приятного просмотра!`
+		Приятного просмотра!`
 				const inlineKeyboard = new InlineKeyboard().text(
 					Config.get('button.goBackToMainMenu'),
 					'updateBookmarks'
@@ -74,5 +73,9 @@ ${updates.join('\n\n')}
 				})
 			}
 		}
-	})
+
+		await mongoose.disconnect()
+	} catch (error) {
+		console.log(error)
+	}
 }

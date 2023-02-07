@@ -78,7 +78,6 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 			// Удача
 
 			const movie = transformMovieObj(data)
-			ctx.session.moviesList = []
 			ctx.session.searchedMovieData = movie
 
 			await handleNewMovie(ctx, true)
@@ -101,8 +100,16 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 		const searchList = await findMovieByName(text, searchType)
 		ctx.session.searchList = searchList
 
-		if (searchList.length) {
-			// Удача
+		if (searchList.length === 1) {
+			// Удача - точное попадание
+
+			const data = await getMovieInfoById(Number(searchList[0].id))
+			const movie = transformMovieObj(data)
+			ctx.session.searchedMovieData = movie
+
+			await handleNewMovie(ctx, true)
+		} else if (searchList.length > 1) {
+			// Удача - выбор из списка
 
 			ctx.replyWithPhoto(new InputFile('images/searchResult.png'), {
 				caption: searchText.getResultText(),
@@ -124,5 +131,6 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 		}
 	}
 
+	ctx.session.moviesList = []
 	await addHistoryNote(ctx, searchQuery)
 }
