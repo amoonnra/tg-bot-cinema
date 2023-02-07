@@ -1,3 +1,4 @@
+import { FileFlavor } from '@grammyjs/files'
 import { Context, SessionFlavor } from 'grammy'
 import { FilmbaseResponseItem } from './fromApi'
 import { Movie, MovieType } from './movie'
@@ -16,4 +17,4 @@ export interface SessionData {
 	userBookmarks: Movie[]
 }
 
-export type MyContext = Context & SessionFlavor<SessionData>
+export type MyContext =  FileFlavor<Context> & SessionFlavor<SessionData>

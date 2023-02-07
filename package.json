@@ -14,18 +14,23 @@
 	"license": "ISC",
 	"devDependencies": {
 		"@types/node": "^18.11.17",
-		"@types/node-telegram-bot-api": "^0.57.6",
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
+		"@ffmpeg-installer/ffmpeg": "^1.1.0",
+		"@grammyjs/files": "^1.0.4",
 		"@grammyjs/menu": "^1.1.2",
 		"@types/cron": "^2.0.0",
+		"@types/ffmpeg": "^1.0.4",
+		"@types/fluent-ffmpeg": "^2.1.20",
+		"@types/node-wit": "^6.0.1",
 		"axios": "^1.2.1",
 		"cron": "^2.2.0",
 		"cross-env": "^7.0.3",
 		"dotenv": "^16.0.3",
+		"fluent-ffmpeg": "^2.1.2",
 		"grammy": "^1.12.1",
 		"mongoose": "^6.9.0",
-		"node-telegram-bot-api": "^0.60.0"
+		"node-wit": "^6.5.1"
 	}
 }
