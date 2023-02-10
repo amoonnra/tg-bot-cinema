@@ -9,7 +9,7 @@ import { logg } from 'utils'
 const CronJob = require('cron').CronJob
 
 const updatePremiersAndPopular = new CronJob(
-	'0 54 * * * *',
+	'0 10 * * * *',
 	async function () {
 		try {
 			await logg('Начали запланированное обновление популярных.')

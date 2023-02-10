@@ -10,7 +10,6 @@ export const movieBaseApi = axios.create({
 	httpsAgent: new https.Agent({ keepAlive: true }),
 	params: {
 		token: process.env.MOVIE_BASE_TOKEN,
-		limit: Config.get('moviesLimit'),
 	},
 	headers: { 'Content-Type': 'application/json' },
 })

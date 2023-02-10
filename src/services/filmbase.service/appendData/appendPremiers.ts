@@ -14,7 +14,7 @@ export async function appendPremiers() {
 				params: {
 					type,
 					limit: isSeriesType(type) ? 200 : 100,
-					// join_seasons: false,
+					join_seasons: false,
 				},
 			})
 
