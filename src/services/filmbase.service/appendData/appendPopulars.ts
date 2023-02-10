@@ -20,12 +20,16 @@ export async function appendPopulars() {
 				url: '/list',
 				params: {
 					type,
+					limit: 100,
 					sort: '-views',
-					year: '2022',
+					// join_seasons: false,
 				},
 			})
 
-			await fs.writeFile(`db/content/popular/${type}.json`, JSON.stringify(result))
+			await fs.writeFile(
+				`db/content/popular/${type}.json`,
+				JSON.stringify(result.filter((movie) => movie.year > 2021).slice(0, 50))
+			)
 			await logg('Добавлены ' + inclinedTypeName[type])
 		}
 	} catch (error) {

@@ -6,7 +6,7 @@ import { getMoviesData } from '../getMoviesData'
 export async function appendCollections() {
 	try {
 		const collections: Collection[] = JSON.parse(
-			await fs.readFile('db/content/collections/allColletctions.json', 'utf-8')
+			await fs.readFile('db/content/collections/allCollections.json', 'utf-8')
 		)
 		
 		for (let collection of collections) {

@@ -9,7 +9,7 @@ import {
 	getMovieInfoById,
 	transformMovieObj,
 } from 'services/filmbase.service'
-import { addHistoryNote } from 'services/db.service'
+import { addHistoryNote, addSearchedMovie } from 'services/db.service'
 import { handleNewMovie } from './handleNewMovie'
 import { menuMovieItem } from 'menu/menuMovieItem'
 
@@ -65,7 +65,8 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 
 	const isKpQuery = text.includes('kinopoisk') && text.match(/(?!\/)(?<=\/)\d+/)?.[0]
 	let searchText = new Searchtext(text, searchType)
-
+	ctx.session.moviesList = []
+	
 	// Если пользователь ввел ссылку на кинопоиск
 
 	if (isKpQuery) {
@@ -108,6 +109,9 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 			ctx.session.searchedMovieData = movie
 
 			await handleNewMovie(ctx, true)
+
+			await addSearchedMovie(ctx, movie)
+			ctx.session.searchType = null
 		} else if (searchList.length > 1) {
 			// Удача - выбор из списка
 
@@ -132,5 +136,6 @@ export const handleSearch = async (ctx: MyContext, inputText?: string) => {
 	}
 
 	ctx.session.moviesList = []
+	// console.log()
 	await addHistoryNote(ctx, searchQuery)
 }

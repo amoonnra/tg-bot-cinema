@@ -13,14 +13,18 @@ export async function appendPremiers() {
 				url: '/video/news',
 				params: {
 					type,
-					limit: isSeriesType(type) ? 200 : 50,
-					year: !isSeriesType(type) ? 2022 : '',
+					limit: isSeriesType(type) ? 200 : 100,
+					// join_seasons: false,
 				},
 			})
 
 			await fs.writeFile(
 				`db/content/premiers/${type}.json`,
-				JSON.stringify(clearDubles(result).slice(0, 50))
+				JSON.stringify(
+					clearDubles(
+						result.filter((movie) => (!isSeriesType(type) ? movie.year > 2021 : true))
+					).slice(0, 50)
+				)
 			)
 
 			await logg('Добавлены ' + inclinedTypeName[type])

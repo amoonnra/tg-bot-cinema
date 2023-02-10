@@ -17,7 +17,7 @@ export const addSearchedMovie = async (
 		userData.lastDate = new Date()
 
 		userData.save(function (err) {
-			if (err) logg('Create user Error')
+			if (err) logg('Add searched movie to user history Error')
 		})
 	} catch (error) {
 		await logg(error)

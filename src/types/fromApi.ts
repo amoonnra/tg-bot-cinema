@@ -1,4 +1,4 @@
-import { MovieType } from "./movie"
+import { MovieType } from './movie'
 
 type StrNull = string | null
 type FilmId = number
@@ -31,5 +31,5 @@ export interface MovieFromApi {
 	quality: string
 	genre: { [key: number]: string }
 	country: { [key: number]: string }
-	seasons?: { episodes: any[] }[]
+	seasons?: { episodes: { iframe_url: string | null }[] }[]
 }
