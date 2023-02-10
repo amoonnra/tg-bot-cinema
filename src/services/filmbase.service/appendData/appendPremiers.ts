@@ -9,14 +9,20 @@ export async function appendPremiers() {
 
 	try {
 		for (let type of types) {
-			const result = await getMoviesData({
-				url: '/video/news',
-				params: {
-					type,
-					limit: isSeriesType(type) ? 200 : 100,
-					join_seasons: false,
-				},
-			})
+			const result = []
+			for (let page = 1; page < 6; page++) {
+				result.push(
+					...(await getMoviesData({
+						url: '/video/news',
+						params: {
+							type,
+							limit: isSeriesType(type) ? 200 : 100,
+							join_seasons: false,
+							page,
+						},
+					}))
+				)
+			}
 
 			await fs.writeFile(
 				`db/content/premiers/${type}.json`,
