@@ -21,6 +21,7 @@ export const initial = (): SessionData => ({
 	searchList: [],
 	searchedMovieData: null,
 	userBookmarks: [],
+	backTo: {route: null, backIndex: 0}
 })
 
 // Middlewares

@@ -1,5 +1,5 @@
 import fs from 'fs/promises'
-import { MyContext } from 'types'
+import { MenuRoute, MyContext } from 'types'
 import { MovieType } from 'types'
 import { handleNewMovie } from 'handlers/handleNewMovie'
 
@@ -8,8 +8,7 @@ export const goToMovieSlider = async (
 	menuSection: string,
 	type?: MovieType | number
 ) => {
-	ctx.session.listIndex = 0
-
+	ctx.session.listIndex = ctx.session.backTo.backIndex && 0
 	const moviesList =
 		menuSection === 'bookmarks'
 			? ctx.session.userBookmarks
@@ -17,6 +16,22 @@ export const goToMovieSlider = async (
 
 	ctx.session.moviesList =
 		menuSection === 'collections' ? moviesList.entities : moviesList
+
+	switch (menuSection) {
+		case 'collections':
+			ctx.session.backTo.route = menuSection
+			break
+		case 'genres/films':
+			ctx.session.backTo.route = 'genresFilms'
+			break
+		case 'genres/serials':
+			ctx.session.backTo.route = 'genresSerials'
+			break
+
+		default:
+			ctx.session.backTo = { route: null, backIndex: 0 }
+			break
+	}
 
 	handleNewMovie(ctx)
 }

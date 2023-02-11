@@ -1,5 +1,5 @@
 import fs from 'fs/promises'
-import { inclinedTypeName, MovieType } from 'types'
+import { inclinedTypeName, isSeriesType, MovieType } from 'types'
 import { errorCatcher, logg } from 'utils'
 import { getMoviesData } from '../getMoviesData'
 
@@ -43,7 +43,8 @@ export async function appendPopulars() {
 				result = [...res23, ...res22]
 			} else {
 				const res = []
-				for (let page = 1; page < 9; page++) {
+				for (let page = 1; page < (isSeriesType(type) ? 10 : 5); page++) {
+					// console.log('page', page)
 					res.push(
 						...(await getMoviesData({
 							url: '/list',

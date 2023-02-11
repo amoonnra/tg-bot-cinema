@@ -4,6 +4,7 @@ import { menuAbout } from './menuAbout'
 import { menuBookmarks } from './menuBookmarks'
 import { menuCollections } from './menuCollections'
 import { menuContacts } from './menuContacts'
+import { menuGenresFilms, menuGenresSerials, menuGenresWrapper } from './menuGenres'
 import { menuMovieItem } from './menuMovieItem'
 import { menuPopular } from './menuPopular'
 import { menuPremiers } from './menuPremiers'
@@ -18,8 +19,9 @@ const menuRoutesConfig: MenuRouteConfig[] = [
 	{ name: '🆕 Новинки', sectionType: 'premiers' },
 	{ name: '🚀 Популярное', sectionType: 'popular', isRow: true },
 	{ name: '🎭 Подборки', sectionType: 'collections' },
+	{ name: '🔮 По жанрам', sectionType: 'genresWrapper', isRow: true },
+	{ name: '🔎 Поиск', sectionType: 'search' },
 	{ name: '⭐ Мои закладки', sectionType: 'bookmarks', isRow: true },
-	{ name: '🔎 Поиск', sectionType: 'search', isRow: true },
 	{ name: '💡 О боте', sectionType: 'about' },
 	{ name: '✉️ Контакты', sectionType: 'contacts' },
 ]
@@ -40,6 +42,7 @@ menuHome.register([
 	menuContacts,
 	menuSearch,
 	menuBookmarks,
+	menuGenresWrapper,
 ])
 
 // Minor routs
@@ -48,6 +51,8 @@ menuHome.register([
 	menuSearchEnter,
 	menuSearchResult,
 	menuUnknownRequest,
+	menuGenresFilms,
+	menuGenresSerials,
 ])
 
 //

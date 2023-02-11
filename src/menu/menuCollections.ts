@@ -14,10 +14,10 @@ menuCollections.dynamic(async (ctx) => {
 		await fs.readFile(`db/content/collections/allCollections.json`, 'utf-8')
 	)
 	const pages = Math.ceil(collectionList.length / 10)
-	const currentPage = Math.ceil(ctx.session.listIndex / 10)
+	const currentPage = ctx.session.backTo.backIndex
 
 	collectionList
-		.slice(ctx.session.listIndex, ctx.session.listIndex + 10)
+		.slice(ctx.session.backTo.backIndex * 10, (ctx.session.backTo.backIndex + 1) * 10)
 		.forEach(({ id, name }, index) => {
 			range.submenu(name, 'movieItem-menu', (ctx) =>
 				goToMovieSlider(ctx, 'collections', id)
@@ -27,7 +27,7 @@ menuCollections.dynamic(async (ctx) => {
 
 	if (currentPage > 0) {
 		range.text(Config.get('button.prevPage'), async (ctx) => {
-			ctx.session.listIndex -= 10
+			ctx.session.backTo.backIndex -= 1
 			ctx.menu.update()
 		})
 	}
@@ -37,14 +37,14 @@ menuCollections.dynamic(async (ctx) => {
 	if (currentPage < pages - 1) {
 		range
 			.text(Config.get('button.nextPage'), async (ctx) => {
-				ctx.session.listIndex += 10
+				ctx.session.backTo.backIndex += 1
 				ctx.menu.update()
 			})
 			.row()
 	}
 
 	range.text(
-		Config.get('button.goBack'),
+		Config.get('button.goBackToMenu'),
 		async (ctx) => await navToMenuSection(ctx, 'home')
 	)
 

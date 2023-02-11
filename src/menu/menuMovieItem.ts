@@ -11,7 +11,6 @@ export const menuMovieItem = new Menu<MyContext>('movieItem-menu', {
 	onMenuOutdated,
 }).dynamic(async (ctx) => {
 	const range = new MenuRange<MyContext>()
-
 	const page = ctx.session.listIndex
 	const allPages = ctx.session.moviesList.length
 	const data = ctx.session.moviesList[page] || ctx.session.searchedMovieData
@@ -32,37 +31,36 @@ export const menuMovieItem = new Menu<MyContext>('movieItem-menu', {
 		)
 		.row()
 
-	if (allPages > 1) {
-		if (page > 0) {
-			range.text(Config.get('button.prevPage'), (ctx) => {
-				ctx.session.listIndex--
-				handleNewMovie(ctx)
-			})
-		}
-
-		range.text(`${page + 1} / ${allPages}`)
-
-		if (page < allPages - 1) {
-			range.text(Config.get('button.nextPage'), (ctx) => {
-				ctx.session.listIndex++
-				handleNewMovie(ctx)
-			})
-		}
-
-		range.row().text(Config.get('button.goBack'), async (ctx) => {
-			navToMenuSection(ctx, 'home')
+	if (page > 0) {
+		range.text(Config.get('button.prevPage'), (ctx) => {
+			ctx.session.listIndex--
+			handleNewMovie(ctx)
 		})
-
-		return range
 	}
 
-	range
-		.text(Config.get('button.goBackToSearch'), (ctx) => {
-			navToMenuSection(ctx, 'search')
+	range.text(`${page + 1} / ${allPages}`)
+
+	if (page < allPages - 1) {
+		range.text(Config.get('button.nextPage'), (ctx) => {
+			ctx.session.listIndex++
+			handleNewMovie(ctx)
 		})
-		.text(Config.get('button.goBackToMenu'), (ctx) => {
-			navToMenuSection(ctx, 'home')
+	}
+
+	range.row()
+
+	const { route } = ctx.session.backTo
+	if (route !== null) {
+		range.text(Config.get('button.goBack'), async (ctx) => {
+			navToMenuSection(ctx, route)
+			ctx.session.backTo.route = null
 		})
+	}
+
+	range.text(Config.get('button.goBackToMenu'), async (ctx) => {
+		navToMenuSection(ctx, 'home')
+		ctx.session.backTo = { route: null, backIndex: 0 }
+	})
 
 	return range
 })

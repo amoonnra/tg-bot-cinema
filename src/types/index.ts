@@ -2,6 +2,7 @@ import { FileFlavor } from '@grammyjs/files'
 import { MenuFlavor } from '@grammyjs/menu'
 import { Context, SessionFlavor } from 'grammy'
 import { FilmbaseResponseItem } from './fromApi'
+import { MenuRoute } from './menu'
 import { Movie, MovieType } from './movie'
 
 export * from './movie'
@@ -16,6 +17,7 @@ export interface SessionData {
 	searchList: FilmbaseResponseItem[]
 	searchedMovieData: Movie | null,
 	userBookmarks: Movie[]
+	backTo: {route: MenuRoute | null, backIndex: number}
 }
 
 export type MyContext =  FileFlavor<Context> & SessionFlavor<SessionData>

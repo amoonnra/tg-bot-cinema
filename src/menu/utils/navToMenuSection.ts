@@ -26,6 +26,7 @@ export const navToMenuSection = async (
 		await goToMovieSlider(ctx, route)
 	} else {
 		ctx.menu.nav(route + '-menu')
+		ctx.session.listIndex = 0
 		await ctx.editMessageMedia({
 			type: 'photo',
 			media: new InputFile(`images/${optional?.photo || route}.png`),
@@ -40,5 +41,6 @@ export const navToMenuSection = async (
 		ctx.session.searchList = []
 		ctx.session.searchType = null
 		ctx.session.searchedMovieData = null
+		ctx.session.backTo = { route: null, backIndex: 0 }
 	}
 }

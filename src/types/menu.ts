@@ -14,6 +14,9 @@ export type MenuRoute =
 	| 'searchError'
 	| 'unknownRequest'
 	| 'searchEnter'
+	| 'genresWrapper'
+	| 'genresFilms'
+	| 'genresSerials'
 
 export interface MenuPoster {
 	photo: InputFile | string

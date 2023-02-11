@@ -4,12 +4,13 @@ import {
 	appendPopulars,
 	appendPremiers,
 } from 'services/filmbase.service/appendData'
+import { appendGenres } from 'services/filmbase.service/appendData/appendGenres'
 import { logg } from 'utils'
 
 const CronJob = require('cron').CronJob
 
 const updatePremiersAndPopular = new CronJob(
-	'0 29 * * * *',
+	'0 10 * * * *',
 	async function () {
 		try {
 			await logg('Начали запланированное обновление популярных.')
@@ -26,7 +27,7 @@ const updatePremiersAndPopular = new CronJob(
 )
 
 const updateBookmarksCron = new CronJob(
-	'0 11 11 * * *',
+	'0 11 9 * * *',
 	async function () {
 		try {
 			const start = Date.now()
@@ -50,6 +51,21 @@ const updateCollections = new CronJob(
 		try {
 			await logg('Начали запланированное обновление подборок.')
 			await appendCollections()
+			await logg('Все прошло хорошо!')
+		} catch (error) {
+			await logg(error)
+		}
+	},
+	null,
+	true
+)
+
+const updateGenres = new CronJob(
+	'0 35 4 * * SUN',
+	async function () {
+		try {
+			await logg('Начали запланированное обновление жанров.')
+			await appendGenres()
 			await logg('Все прошло хорошо!')
 		} catch (error) {
 			await logg(error)

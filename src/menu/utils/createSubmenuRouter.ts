@@ -1,11 +1,11 @@
-import { Menu } from '@grammyjs/menu'
+import { Menu, MenuRange } from '@grammyjs/menu'
 import Config from 'conf'
-import { MenuSectionConfig, MyContext, pluralTypeName } from 'types'
+import { MenuRoute, MenuSectionConfig, MyContext, pluralTypeName } from 'types'
 import { goToMovieSlider } from './goToMovieSlider'
 import { navToMenuSection } from './navToMenuSection'
 
 export function createSubmenuRouter(
-	menuSection: string,
+	menuSection: MenuRoute,
 	menuSectionConfig: MenuSectionConfig[]
 ) {
 	const menu = new Menu<MyContext>(menuSection + '-menu')
